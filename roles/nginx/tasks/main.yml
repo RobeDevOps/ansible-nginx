@@ -26,3 +26,14 @@
   template:
     src: example.com.j2
     dest: /etc/nginx/sites-available/example.com
+
+- name: Create enable the site 
+  file:
+    src: /etc/nginx/sites-available/example.com
+    dest: /etc/nginx/sites-enabled/example.com
+    state: link
+
+- name: Start nginx service
+  systemd:
+    name: nginx
+    state: restarted
