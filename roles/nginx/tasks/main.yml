@@ -1,0 +1,28 @@
+---
+- name: Install nginx
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: Start nginx service
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: create server directory
+  file:
+    path: /var/www/example.com/html
+    state: directory
+    mode: 0755
+
+- name: Create index page
+  template:
+    src: index.html.j2
+    dest: /var/www/example.com/html/index.html
+
+- name: Create server block
+  template:
+    src: example.com.j2
+    dest: /etc/nginx/sites-available/example.com
